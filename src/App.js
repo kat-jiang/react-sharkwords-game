@@ -1,7 +1,43 @@
 import './App.css';
 import React from 'react';
-import { Letters } from './Letters';
-import { Word } from './Word';
+
+const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+
+const Word = (props) => {
+  const charDivs = [];
+  for (const [i, letter] of Object.entries(props.word)) {
+    let displayLetter = null;
+    if (props.guessedLetters.includes(letter)) {
+      displayLetter = letter;
+    }
+
+    charDivs.push(
+      <div key={i} className="letter-box">
+        {displayLetter}
+      </div>,
+    );
+  }
+
+  return <section className="word-container">{charDivs}</section>;
+};
+
+const Letters = (props) => {
+  const letterBtns = [];
+  for (const letter of ALPHABET) {
+    letterBtns.push(
+      <button
+        type="button"
+        key={letter}
+        disabled={props.disableAll || props.guessedLetters.includes(letter)}
+        onClick={() => props.handleGuessLetter(letter)}
+      >
+        {letter}
+      </button>,
+    );
+  }
+
+  return <section className="letter-buttons">{letterBtns}</section>;
+};
 
 function App(props) {
   const [guessedLetters, setGuessedLetters] = React.useState([]);
@@ -23,23 +59,25 @@ function App(props) {
   };
 
   const hasWon = numCorrect === props.word.length;
-  const hasLost = numWrong > 5;
+  const hasLost = numWrong > 4;
+
   return (
     <div>
+      <h1>Sharkwords</h1>
+      <div className='shark-images'>
+        <img src={`/images/guess${numWrong}.png`} alt={`${numWrong}-guesses-wrong`} />
+      </div>
       {hasWon ? (
         <a id="win" href="/sharkwords-final">
           Congratulations! 🥳 You won! Click here to play again.
         </a>
       ) : null}
-      <section id="shark-img">
-        {hasLost ? (
-          <a id="win" href="/sharkwords-final">
-            Game over :( Click here to play again
-          </a>
-        ) : (
-          <img src={`/static/images/guess${numWrong}.png`} alt={`${numWrong}-guesses-wrong`} />
-        )}
-      </section>
+      {hasLost ? (
+        <a id="win" href="/sharkwords-final">
+          The Shark got you! 🥺 Click here to play again
+        </a>
+      ) : null}
+
       <Word word={props.word} guessedLetters={guessedLetters} />
       <Letters
         guessedLetters={guessedLetters}

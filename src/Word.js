@@ -1,3 +1,5 @@
+import React from 'react'
+
 const Word = (props) => {
   const charDivs = [];
   for (const [i, letter] of Object.entries(props.word)) {

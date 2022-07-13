@@ -1,3 +1,5 @@
+import React from 'react'
+
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
 
 const Letters = (props) => {
