@@ -24,4 +24,4 @@ Run the app:
 ```
 npm start
 ```
-You can now navigate to '[http://localhost:3000](http://localhost:3000) to access the game in your browser!
+You can now navigate to [http://localhost:3000](http://localhost:3000) to access the game in your browser!
