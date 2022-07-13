@@ -1,6 +1,7 @@
-import logo from './logo.svg';
 import './App.css';
 import React from 'react';
+import { Letters } from './Letters';
+import { Word } from './Word';
 
 function App(props) {
   const [guessedLetters, setGuessedLetters] = React.useState([]);
