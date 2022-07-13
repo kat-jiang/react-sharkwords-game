@@ -1,23 +1,50 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
 
-function App() {
+function App(props) {
+  const [guessedLetters, setGuessedLetters] = React.useState([]);
+  const [numWrong, setNumWrong] = React.useState(0);
+  const [numCorrect, setNumCorrect] = React.useState(0);
+
+  const guessLetter = (guessedLetter) => {
+    if (!props.word.includes(guessedLetter)) {
+      setNumWrong((currentNumWrong) => currentNumWrong + 1);
+    } else {
+      for (const letter of props.word) {
+        if (letter === guessedLetter) {
+          setNumCorrect((currentNumCorrect) => currentNumCorrect + 1);
+        }
+      }
+    }
+
+    setGuessedLetters((prevLetters) => [...prevLetters, guessedLetter]);
+  };
+
+  const hasWon = numCorrect === props.word.length;
+  const hasLost = numWrong > 5;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
+    <div>
+      {hasWon ? (
+        <a id="win" href="/sharkwords-final">
+          Congratulations! 🥳 You won! Click here to play again.
         </a>
-      </header>
+      ) : null}
+      <section id="shark-img">
+        {hasLost ? (
+          <a id="win" href="/sharkwords-final">
+            Game over :( Click here to play again
+          </a>
+        ) : (
+          <img src={`/static/images/guess${numWrong}.png`} alt={`${numWrong}-guesses-wrong`} />
+        )}
+      </section>
+      <Word word={props.word} guessedLetters={guessedLetters} />
+      <Letters
+        guessedLetters={guessedLetters}
+        handleGuessLetter={guessLetter}
+        disableAll={hasWon || hasLost}
+      />
     </div>
   );
 }
