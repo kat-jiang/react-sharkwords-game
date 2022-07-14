@@ -1,19 +1,20 @@
 import './App.css';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import Letters from './Letters';
 import Word from './Word';
 
 
-function App(props) {
-  const [guessedLetters, setGuessedLetters] = React.useState([]);
-  const [numWrong, setNumWrong] = React.useState(0);
-  const [numCorrect, setNumCorrect] = React.useState(0);
+function App() {
+  const [guessedLetters, setGuessedLetters] = useState([]);
+  const [numWrong, setNumWrong] = useState(0);
+  const [numCorrect, setNumCorrect] = useState(0);
+  const [word, setWord] = useState('');
 
   const guessLetter = (guessedLetter) => {
-    if (!props.word.includes(guessedLetter)) {
+    if (!word.includes(guessedLetter)) {
       setNumWrong((currentNumWrong) => currentNumWrong + 1);
     } else {
-      for (const letter of props.word) {
+      for (const letter of word) {
         if (letter === guessedLetter) {
           setNumCorrect((currentNumCorrect) => currentNumCorrect + 1);
         }
@@ -23,8 +24,17 @@ function App(props) {
     setGuessedLetters((prevLetters) => [...prevLetters, guessedLetter]);
   };
 
-  const hasWon = numCorrect === props.word.length;
+  const hasWon = numCorrect === word.length;
   const hasLost = numWrong > 4;
+
+  useEffect(() => {
+    fetch('https://random-word-api.herokuapp.com/word')
+    .then((response) => response.json())
+    .then((data) => {
+      setWord(data[0])
+    })
+  }, [])
+  
 
   return (
     <div>
@@ -33,17 +43,17 @@ function App(props) {
         <img src={`/images/guess${numWrong}.png`} alt={`${numWrong}-guesses-wrong`} />
       </div>
       {hasWon ? (
-        <a id="win" href="/sharkwords-final">
+        <a id="win" href="/">
           Congratulations! 🥳 You won! Click here to play again.
         </a>
       ) : null}
       {hasLost ? (
-        <a id="win" href="/sharkwords-final">
+        <a id="win" href="/">
           The Shark got you! 🥺 Click here to play again
         </a>
       ) : null}
 
-      <Word word={props.word} guessedLetters={guessedLetters} />
+      <Word word={word} guessedLetters={guessedLetters} />
       <Letters
         guessedLetters={guessedLetters}
         handleGuessLetter={guessLetter}
