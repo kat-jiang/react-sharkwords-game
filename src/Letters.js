@@ -8,6 +8,7 @@ const Letters = (props) => {
     letterBtns.push(
       <button
         type="button"
+        className='letter-button'
         key={letter}
         disabled={props.disableAll || props.guessedLetters.includes(letter)}
         onClick={() => props.handleGuessLetter(letter)}

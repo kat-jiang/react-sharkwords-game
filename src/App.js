@@ -27,14 +27,24 @@ function App() {
   const hasWon = numCorrect === word.length;
   const hasLost = numWrong > 4;
 
-  useEffect(() => {
+  const getRandomWord = () => {
     fetch('https://random-word-api.herokuapp.com/word')
     .then((response) => response.json())
     .then((data) => {
       setWord(data[0])
     })
+  }
+
+  useEffect(() => {
+    getRandomWord()
   }, [])
-  
+
+  const resetGame = () => {
+    setGuessedLetters(() => []);
+    setNumCorrect(() => 0);
+    setNumWrong(() => 0);
+    getRandomWord();
+  }
 
   return (
     <div>
@@ -43,14 +53,20 @@ function App() {
         <img src={`/images/guess${numWrong}.png`} alt={`${numWrong}-guesses-wrong`} />
       </div>
       {hasWon ? (
-        <a id="win" href="/">
+        <button
+        className='reset-button'
+        onClick={() => resetGame()}
+        >
           Congratulations! 🥳 You won! Click here to play again.
-        </a>
+        </button>
       ) : null}
       {hasLost ? (
-        <a id="win" href="/">
-          The Shark got you! 🥺 Click here to play again
-        </a>
+        <button
+        className='reset-button'
+        onClick={() => resetGame()}
+        >
+          The Shark got you! The word was {word}. <br></br> Click here to play again.
+        </button>
       ) : null}
 
       <Word word={word} guessedLetters={guessedLetters} />
