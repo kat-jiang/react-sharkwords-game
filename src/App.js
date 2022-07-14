@@ -1,24 +1,8 @@
 import './App.css';
 import React from 'react';
 import Letters from './Letters';
+import Word from './Word';
 
-const Word = (props) => {
-  const charDivs = [];
-  for (const [i, letter] of Object.entries(props.word)) {
-    let displayLetter = null;
-    if (props.guessedLetters.includes(letter)) {
-      displayLetter = letter;
-    }
-
-    charDivs.push(
-      <div key={i} className="letter-box">
-        {displayLetter}
-      </div>,
-    );
-  }
-
-  return <section className="word-container">{charDivs}</section>;
-};
 
 function App(props) {
   const [guessedLetters, setGuessedLetters] = React.useState([]);
