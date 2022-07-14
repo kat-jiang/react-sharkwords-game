@@ -1,11 +1,11 @@
 body {
 	font-family: 'Press Start 2P', serif;
-	font-size: 48px;
+	font-size: 36px;
 	background-image: url('../public/images/pixel_background.png');
 }
 
 h1 {
-	font-size: 48px;
+	font-size: 36px;
 	letter-spacing: 3px;
 	text-align: center;
 }
@@ -22,17 +22,6 @@ section {
   flex-wrap: wrap;
 }
 
-/* #play-again {
-  display: block;
-  text-align: center;
-  font-weight: bold;
-  font-size: 18px;
-  text-decoration: underline;
-  color: red;
-  cursor: pointer;
-  margin: 0.67em 0;
-} */
-
 #win {
   display: block;
   text-align: center;
@@ -43,10 +32,6 @@ section {
   cursor: pointer;
   margin: 0.67em 0;
 }
-
-/* #play-again:hover {
-  text-decoration: none;
-} */
 
 #letter-box,
 .letter-box {
