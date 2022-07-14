@@ -1,7 +1,6 @@
 import './App.css';
 import React from 'react';
-
-const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
+import Letters from './Letters';
 
 const Word = (props) => {
   const charDivs = [];
@@ -19,24 +18,6 @@ const Word = (props) => {
   }
 
   return <section className="word-container">{charDivs}</section>;
-};
-
-const Letters = (props) => {
-  const letterBtns = [];
-  for (const letter of ALPHABET) {
-    letterBtns.push(
-      <button
-        type="button"
-        key={letter}
-        disabled={props.disableAll || props.guessedLetters.includes(letter)}
-        onClick={() => props.handleGuessLetter(letter)}
-      >
-        {letter}
-      </button>,
-    );
-  }
-
-  return <section className="letter-buttons">{letterBtns}</section>;
 };
 
 function App(props) {
